@@ -1,0 +1,22 @@
+{
+    "name": "morten/validator",
+    "description": "Data validator.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Arthur Maurer",
+            "email": "arthimaurer@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Validator": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.2"
+    }
+}
