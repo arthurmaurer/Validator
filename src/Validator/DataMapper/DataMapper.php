@@ -21,6 +21,16 @@ class DataMapper
 	{
 		list($root, $rest) = $this->getPathRoot($path);
 
+		if ($root === "*")
+		{
+			$result = array();
+
+			foreach ($object as $i => $child)
+				$result[$i] = $this->realGet($rest, $child);
+
+			return $result;
+		}
+
 		if (array_key_exists($root, $object))
 		{
 			$target = $object[$root];
