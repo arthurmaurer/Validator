@@ -5,24 +5,27 @@ use Validator\Test;
 
 class Translator
 {
-	public $locale = "en_GB";
+	public static $locale = "en_US";
 
-	public function translateErrors(array $errors)
+	public function translateErrors(array $errors, $locale)
 	{
 		$errorStrings = array();
 
 		foreach ($errors as $error)
 		{
 			$key = $error["field"]->name;
-			$errorStrings[$key] = $this->translateError($error);
+			$errorStrings[$key] = $this->translateError($error, $locale);
 		}
 
 		return $errorStrings;
 	}
 
-	public function translateError(array $error)
+	public function translateError(array $error, $locale)
 	{
-		$message = $error["test"]->translate($error["field"], $error["error"], $this->locale);
+		if (!$locale)
+			$locale = self::$locale;
+
+		$message = $error["test"]->translate($error["field"], $error["error"], $locale);
 
 		return $message;
 	}

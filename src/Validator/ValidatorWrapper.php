@@ -38,10 +38,10 @@ class ValidatorWrapper
 		return $this->v->validate($data);
 	}
 
-	public function getErrors()
+	public function getErrors($locale = null)
 	{
 		$translator = new Translator;
-		$errors = $translator->translateErrors($this->v->errors);
+		$errors = $translator->translateErrors($this->v->errors, $locale);
 
 		return $errors;
 	}
