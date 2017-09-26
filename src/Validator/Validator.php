@@ -2,9 +2,6 @@
 namespace Validator;
 use Validator\DataMapper\DataMapper;
 use Validator\DataMapper\NoResult;
-use Validator\Field;
-use Validator\FieldFactory;
-use Validator\ErrorContainer;
 
 class Validator
 {
@@ -24,33 +21,9 @@ class Validator
 		self::$testClasses[$name] = $testClass;
 	}
 
-	public function __construct(array $fields = null)
+	public function __construct()
 	{
 		$this->errorContainer = new ErrorContainer;
-
-		if ($fields)
-			$this->addFields($fields);
-	}
-
-	public function addLabels(array $labels)
-	{
-		foreach ($labels as $fieldPath => $label)
-			$this->fields[$fieldPath]->label = $label;
-	}
-
-	public function addField($fieldName, array $tests)
-	{
-		$fieldFactory = new FieldFactory;
-
-		$field = $fieldFactory->create($fieldName, $tests);
-		$this->fields[$fieldName] = $field;
-	}
-
-	public function addFields(array $fields)
-	{
-		$fieldFactory = new FieldFactory;
-
-		$this->fields += $fieldFactory->bulkCreate($fields);
 	}
 
 	public function validate(array $data)
@@ -93,11 +66,6 @@ class Validator
 			"test" => $test,
 			"error" => $error
 		));
-	}
-
-	public function getErrors()
-	{
-		return $this->errorContainer->errors;
 	}
 }
 
