@@ -1,12 +1,12 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Validator\Validator;
+use Validator\ValidatorWrapper;
 
 class ValidatorTest extends TestCase
 {
 	public function testValidator()
 	{
-		$v = new Validator(array(
+		$v = new ValidatorWrapper(array(
 			"user.name" => array(
 				array("required"),
 			),
@@ -17,14 +17,14 @@ class ValidatorTest extends TestCase
 			"user.email" => array(
 				array("email"),
 			),
-			"paymentDetails.method" => array(
+			"payment.method" => array(
 				array("in", array("paypal", "cash"))
 			),
-			"paymentDetails.amount" => array(
-				array("requiredWith", "paymentDetails.method")
+			"payment.amount" => array(
+				array("requiredWith", "payment.method")
 			),
-			"paymentDetails.paypalEmail" => array(
-				array("requiredWith", "paymentDetails.method", "paypal")
+			"payment.paypalEmail" => array(
+				array("requiredWith", "payment.method", "paypal")
 			),
 		));
 
@@ -36,7 +36,7 @@ class ValidatorTest extends TestCase
 				"age": 25,
 				"email": "mail@mail.mail"
 			},
-			"paymentDetails": {
+			"payment": {
 				"method": "paypal",
 				"amount": 100,
 				"paypalEmail": "mail@mail.mail"
@@ -53,7 +53,7 @@ class ValidatorTest extends TestCase
 				"age": 25,
 				"email": "mail@mail.mail"
 			},
-			"paymentDetails": {
+			"payment": {
 				"method": "bankTransfer",
 				"amount": 100,
 				"paypalEmail": "mail@mail.mail"
@@ -70,7 +70,7 @@ class ValidatorTest extends TestCase
 				"age": 25,
 				"email": "mail@mail.mail"
 			},
-			"paymentDetails": {
+			"payment": {
 				"method": "paypal",
 				"amount": 100
 			}
@@ -86,7 +86,7 @@ class ValidatorTest extends TestCase
 				"age": 25,
 				"email": "mail@mail.mail"
 			},
-			"paymentDetails": {
+			"payment": {
 				"method": "cash",
 				"amount": 100
 			}
@@ -102,7 +102,7 @@ class ValidatorTest extends TestCase
 				"age": 25,
 				"email": "mail@mail.mail"
 			},
-			"paymentDetails": {
+			"payment": {
 				"method": "cash"
 			}
 		}', true));
