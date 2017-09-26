@@ -65,6 +65,7 @@ class Validator
 }
 
 Validator::addTest('Validator\\Test\\Max');
+Validator::addTest('Validator\\Test\\Min');
 Validator::addTest('Validator\\Test\\Number');
 Validator::addTest('Validator\\Test\\Alpha');
 Validator::addTest('Validator\\Test\\Required');

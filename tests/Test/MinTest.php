@@ -1,12 +1,12 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Validator\Test;
-use Validator\Test\Max;
+use Validator\Test\Min;
 use Validator\DataMapper\NoResult;
 use Validator\DataMapper\DataMapper;
 use Validator\Field;
 
-class MaxTest extends TestCase
+class MinTest extends TestCase
 {
 	protected $field;
 	protected $mapper;
@@ -21,10 +21,10 @@ class MaxTest extends TestCase
 	{
 		return array(
 			//	  value	limit	strict	expected
-			array(0,	5,		false,	true),
+			array(8,	5,		false,	true),
 			array(5,	5,		false,	true),
 			array(5,	5,		true,	false),
-			array(6,	5,		false,	false),
+			array(4,	5,		false,	false),
 			array("",	5,		false,	false),
 			array("ab",	5,		false,	false),
 		);
@@ -33,9 +33,9 @@ class MaxTest extends TestCase
 	/**
 	 * @dataProvider getData
 	 */
-	public function testMax($value, $limit, $strict, $expected)
+	public function testMin($value, $limit, $strict, $expected)
 	{
-		$test = new Max(array($limit, $strict));
+		$test = new Min(array($limit, $strict));
 
 		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
