@@ -21,8 +21,8 @@ class RequiredTest extends TestCase
 	{
 		return array(
 			array(new NoResult,	false),
-			array(null,			true),
-			array("",			true),
+			array(null,			false),
+			array("",			false),
 			array(0,			true),
 			array(false,		true),
 		);

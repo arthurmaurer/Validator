@@ -9,7 +9,7 @@ class Required extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		return (!$value instanceof NoResult);
+		return (!$value instanceof NoResult && $value !== "" && $value !== null);
 	}
 
 	public function getName()
