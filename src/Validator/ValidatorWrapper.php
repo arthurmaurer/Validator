@@ -41,7 +41,7 @@ class ValidatorWrapper
 	public function getErrors()
 	{
 		$translator = new Translator;
-		$errors = $translator->translateErrors($this->v->errorContainer->errors);
+		$errors = $translator->translateErrors($this->v->errors);
 
 		return $errors;
 	}

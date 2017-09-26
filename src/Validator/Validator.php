@@ -8,7 +8,7 @@ class Validator
 	public static $testClasses = array();
 
 	public $fields = array();
-	public $errorContainer;
+	public $errors;
 
 	public static function addTest($testClass)
 	{
@@ -21,21 +21,16 @@ class Validator
 		self::$testClasses[$name] = $testClass;
 	}
 
-	public function __construct()
-	{
-		$this->errorContainer = new ErrorContainer;
-	}
-
 	public function validate(array $data)
 	{
 		$mapper = new DataMapper($data);
 
-		$this->errorContainer->clear();
+		$this->errors = array();
 
 		foreach ($this->fields as $field)
 			$this->validateField($field, $mapper);
 
-		return ($this->errorContainer->count() === 0);
+		return (count($this->errors) === 0);
 	}
 
 	public function validateField(Field $field, DataMapper $mapper)
@@ -61,11 +56,11 @@ class Validator
 
 	public function addError(Field $field, Test $test, $error)
 	{
-		$this->errorContainer->add(array(
+		$this->errors[] = array(
 			"field" => $field,
 			"test" => $test,
 			"error" => $error
-		));
+		);
 	}
 }
 
