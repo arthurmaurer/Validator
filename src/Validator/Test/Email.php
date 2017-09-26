@@ -9,12 +9,9 @@ class Email extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		if ($value instanceof NoResult)
-			return true;
-
 		$value = $this->sanitize($value);
 
-		return ($value === null || $value === "" || filter_var($value, FILTER_VALIDATE_EMAIL));
+		return (filter_var($value, FILTER_VALIDATE_EMAIL) !== false);
 	}
 
 	public function sanitize($value)

@@ -1,6 +1,7 @@
 <?php
 namespace Validator;
 use Validator\DataMapper\DataMapper;
+use Validator\DataMapper\NoResult;
 use Validator\Field;
 use Validator\FieldFactory;
 use Validator\ErrorContainer;
@@ -56,29 +57,32 @@ class Validator
 
 	public function validate(array $data)
 	{
-		$dataMapper = new DataMapper($data);
+		$mapper = new DataMapper($data);
 
 		$this->errorContainer->clear();
 
 		foreach ($this->fields as $field)
-			$this->validateField($field, $dataMapper);
+			$this->validateField($field, $mapper);
 
 		return ($this->errorContainer->count() === 0);
 	}
 
-	public function validateField(Field $field, DataMapper $dataMapper)
+	public function validateField(Field $field, DataMapper $mapper)
 	{
+		$value = $mapper->get($field->name);
+
 		foreach ($field->tests as $testName => $test)
 		{
-			$value = $dataMapper->get($field->name);
+			if ($value instanceof NoResult && !$test->shouldTestMissingFields())
+				continue ;
 
-			$result = $test->testAndConvertResult($value, $field, $dataMapper);
+			$result = $test->testAndConvertResult($value, $field, $mapper);
 
-			if ($result === Test::RESULT_ERROR)
+			if ($result !== Test::RESULT_VALID)
+			{
 				$this->addError($field, $test);
-
-			if ($result === Test::RESULT_ERROR || $result === Test::RESULT_BREAK)
 				return false;
+			}
 		}
 
 		return true;
@@ -90,6 +94,11 @@ class Validator
 			"field" => $field,
 			"test" => $test
 		));
+	}
+
+	public function getErrors()
+	{
+		return $this->errorContainer->errors;
 	}
 }
 

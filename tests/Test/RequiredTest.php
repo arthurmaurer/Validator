@@ -20,11 +20,11 @@ class RequiredTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,	Test::RESULT_ERROR),
-			array(null,			Test::RESULT_VALID),
-			array("",			Test::RESULT_VALID),
-			array(0,			Test::RESULT_VALID),
-			array(false,		Test::RESULT_VALID),
+			array(new NoResult,	false),
+			array(null,			true),
+			array("",			true),
+			array(0,			true),
+			array(false,		true),
 		);
 	}
 
@@ -35,7 +35,7 @@ class RequiredTest extends TestCase
 	{
 		$test = new Required;
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

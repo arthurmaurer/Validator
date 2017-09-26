@@ -20,18 +20,17 @@ class EmailTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,			Test::RESULT_VALID),
-			array(null,					Test::RESULT_VALID),
-			array("",					Test::RESULT_VALID),
-			array("test@test.te",		Test::RESULT_VALID),
-			array("@test.test",			Test::RESULT_ERROR),
-			array("t-__@test.tt",		Test::RESULT_VALID),
-			array("test.test",			Test::RESULT_ERROR),
-			array("test@test.",			Test::RESULT_ERROR),
-			array("t est@test.te",		Test::RESULT_ERROR),
-			array("test@t est.te",		Test::RESULT_ERROR),
-			array("test@test.t e",		Test::RESULT_ERROR),
-			array("  test@test.test  ",	Test::RESULT_VALID),
+			array(null,					false),
+			array("",					false),
+			array("test@test.te",		true),
+			array("@test.test",			false),
+			array("t-__@test.tt",		true),
+			array("test.test",			false),
+			array("test@test.",			false),
+			array("t est@test.te",		false),
+			array("test@t est.te",		false),
+			array("test@test.t e",		false),
+			array("  test@test.test  ",	true),
 		);
 	}
 
@@ -42,7 +41,7 @@ class EmailTest extends TestCase
 	{
 		$test = new Email;
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

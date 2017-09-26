@@ -4,12 +4,8 @@ use Validator\DataMapper\DataMapper;
 
 abstract class Test
 {
-	// The test succeeds, we go to the next test
 	const RESULT_VALID = 0;
-	// The test fails, we stop here and we throw an error
 	const RESULT_ERROR = -1;
-	// We stop here without throwing an error
-	const RESULT_BREAK = -2;
 
 	public $params = array();
 
@@ -18,9 +14,9 @@ abstract class Test
 		$this->params = $params;
 	}
 
-	public function testAndConvertResult($value, Field $field, DataMapper $data)
+	public function testAndConvertResult($value, Field $field, DataMapper $mapper)
 	{
-		$result = $this->test($value, $field, $data);
+		$result = $this->test($value, $field, $mapper);
 
 		if ($result === true)
 			$result = self::RESULT_VALID;
@@ -33,6 +29,11 @@ abstract class Test
 	public function getName()
 	{
 		throw new \Exception("Test::getName field must be overridden.");
+	}
+
+	public function shouldTestMissingFields()
+	{
+		return false;
 	}
 
 	public function getTranslation()

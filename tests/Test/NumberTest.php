@@ -20,18 +20,17 @@ class NumberTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,	Test::RESULT_VALID),
-			array(null,			Test::RESULT_VALID),
-			array("",			Test::RESULT_VALID),
-			array("11",			Test::RESULT_VALID),
-			array("11.11",		Test::RESULT_VALID),
-			array("11a",		Test::RESULT_ERROR),
-			array("11.11a",		Test::RESULT_ERROR),
-			array("11.",		Test::RESULT_VALID),
-			array(".11",		Test::RESULT_VALID),
-			array("-11.11",		Test::RESULT_VALID),
-			array("-.11",		Test::RESULT_VALID),
-			array("a",			Test::RESULT_ERROR),
+			array(null,			false),
+			array("",			false),
+			array("11",			true),
+			array("11.11",		true),
+			array("11a",		false),
+			array("11.11a",		false),
+			array("11.",		true),
+			array(".11",		true),
+			array("-11.11",		true),
+			array("-.11",		true),
+			array("a",			false),
 		);
 	}
 
@@ -42,7 +41,7 @@ class NumberTest extends TestCase
 	{
 		$test = new Number;
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

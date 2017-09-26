@@ -20,13 +20,10 @@ class MaxTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,	Test::RESULT_VALID),
-			array(0,			Test::RESULT_VALID),
-			array(5,			Test::RESULT_VALID),
-			array(6,			Test::RESULT_ERROR),
-			array("",			Test::RESULT_VALID),
-			array("abcde",		Test::RESULT_VALID),
-			array("abcdef",		Test::RESULT_ERROR),
+			array(0,			true),
+			array(5,			true),
+			array(6,			false),
+			array("",			false),
 		);
 	}
 
@@ -37,7 +34,7 @@ class MaxTest extends TestCase
 	{
 		$test = new Max(array(5));
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

@@ -12,12 +12,6 @@ class RequiredWith extends Test
 		$pair = $this->params[0];
 		$pairValue = $dataMapper->get($pair);
 
-		// echo "\n";
-		// var_dump(array(
-		// 	"pair" => $pair,
-		// 	"pairValue" => $pairValue
-		// ));
-
 		if (isset($this->params[1]))
 		{
 			$wantedValue = $this->params[1];
@@ -34,6 +28,11 @@ class RequiredWith extends Test
 	public function getName()
 	{
 		return "requiredWith";
+	}
+
+	public function shouldTestMissingFields()
+	{
+		return true;
 	}
 
 	public function getTranslation()

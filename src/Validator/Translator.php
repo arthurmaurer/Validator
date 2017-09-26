@@ -22,7 +22,7 @@ class Translator
 
 		$messages = array();
 
-		foreach ($v->errorContainer->errors as $error)
+		foreach ($v->getErrors() as $error)
 		{
 			$fieldName = $error["field"]->name;
 			$messages[$fieldName][] = self::getError($error);

@@ -20,14 +20,13 @@ class AlphaTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,	Test::RESULT_VALID),
-			array(null,			Test::RESULT_VALID),
-			array("",			Test::RESULT_VALID),
-			array("abcd",		Test::RESULT_VALID),
-			array(" ",			Test::RESULT_VALID),
-			array("abcd0",		Test::RESULT_ERROR),
-			array("1",			Test::RESULT_ERROR),
-			array(1,			Test::RESULT_ERROR),
+			array(null,			false),
+			array("",			false),
+			array("abcd",		true),
+			array(" ",			false),
+			array("abcd0",		false),
+			array("1",			false),
+			array(1,			false),
 		);
 	}
 
@@ -38,7 +37,7 @@ class AlphaTest extends TestCase
 	{
 		$test = new Alpha;
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

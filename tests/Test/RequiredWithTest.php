@@ -24,17 +24,17 @@ class RequiredWithTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,		"firstname",	new NoResult,	Test::RESULT_ERROR),
-			array(new NoResult,		"unknown",		new NoResult,	Test::RESULT_VALID),
+			array(new NoResult,		"firstname",	new NoResult,	false),
+			array(new NoResult,		"unknown",		new NoResult,	true),
 
-			array("value",			"firstname",	new NoResult,	Test::RESULT_VALID),
-			array("value",			"unknown",		new NoResult,	Test::RESULT_VALID),
+			array("value",			"firstname",	new NoResult,	true),
+			array("value",			"unknown",		new NoResult,	true),
 
-			array(new NoResult,		"firstname",	"Arthur",		Test::RESULT_ERROR),
-			array(new NoResult,		"firstname",	"Bob",			Test::RESULT_VALID),
+			array(new NoResult,		"firstname",	"Arthur",		false),
+			array(new NoResult,		"firstname",	"Bob",			true),
 
-			array("value",			"firstname",	"Arthur",		Test::RESULT_VALID),
-			array("value",			"firstname",	"Bob",			Test::RESULT_VALID),
+			array("value",			"firstname",	"Arthur",		true),
+			array("value",			"firstname",	"Bob",			true),
 		);
 	}
 
@@ -50,7 +50,7 @@ class RequiredWithTest extends TestCase
 
 		$test = new RequiredWith($params);
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

@@ -9,7 +9,7 @@ class In extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		return ($value instanceof NoResult || in_array($value, $this->params[0]));
+		return (in_array($value, $this->params[0]));
 	}
 
 	public function getName()

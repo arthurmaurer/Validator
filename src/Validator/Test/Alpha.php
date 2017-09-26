@@ -9,12 +9,9 @@ class Alpha extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		if ($value instanceof NoResult)
-			return true;
-
 		$valueWithoutSpaces = str_replace(" ", "", $value);
 
-		return ($valueWithoutSpaces === "" || ctype_alpha($valueWithoutSpaces));
+		return (ctype_alpha($valueWithoutSpaces));
 	}
 
 	public function getName()

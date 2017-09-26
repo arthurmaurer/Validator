@@ -9,17 +9,10 @@ class Max extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		if ($value instanceof NoResult)
-			return true;
+		if (!is_numeric($value))
+			return false;
 
-		$type = gettype($value);
-
-		if ($type === "string")
-			$size = strlen($value);
-		else
-			$size = $value;
-
-		return ($size <= $this->params[0]);
+		return ($value <= $this->params[0]);
 	}
 
 	public function getName()

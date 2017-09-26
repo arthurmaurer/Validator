@@ -20,10 +20,9 @@ class InTest extends TestCase
 	public function getData()
 	{
 		return array(
-			array(new NoResult,	Test::RESULT_VALID),
-			array("one",		Test::RESULT_VALID),
-			array(2,			Test::RESULT_ERROR),
-			array(null,			Test::RESULT_ERROR),
+			array("one",		true),
+			array(2,			false),
+			array(null,			false),
 		);
 	}
 
@@ -36,7 +35,7 @@ class InTest extends TestCase
 			array("one", "two", 3)
 		));
 
-		$result = $test->testAndConvertResult($value, $this->field, $this->mapper);
+		$result = $test->test($value, $this->field, $this->mapper);
 		$this->assertEquals($expected, $result);
 	}
 }

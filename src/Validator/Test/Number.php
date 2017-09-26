@@ -9,7 +9,7 @@ class Number extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		return ($value instanceof NoResult || $value === null || $value === "" || is_numeric($value));
+		return (is_numeric($value));
 	}
 
 	public function getName()

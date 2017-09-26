@@ -17,6 +17,11 @@ class Required extends Test
 		return "required";
 	}
 
+	public function shouldTestMissingFields()
+	{
+		return true;
+	}
+
 	public function getTranslation()
 	{
 		return array(
