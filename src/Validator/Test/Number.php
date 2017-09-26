@@ -17,10 +17,8 @@ class Number extends Test
 		return "number";
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ must be a number"
-		);
+		return "$field->label must be a number";
 	}
 }

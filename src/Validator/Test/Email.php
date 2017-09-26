@@ -24,10 +24,8 @@ class Email extends Test
 		return "email";
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ is not a valid email"
-		);
+		return "$field->label is not a valid email";
 	}
 }

@@ -22,10 +22,8 @@ class Required extends Test
 		return true;
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ can't be empty"
-		);
+		return "$field->label is required";
 	}
 }

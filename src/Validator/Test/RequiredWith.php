@@ -35,10 +35,8 @@ class RequiredWith extends Test
 		return true;
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ is required"
-		);
+		return "$field->label is required";
 	}
 }

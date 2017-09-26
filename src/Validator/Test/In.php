@@ -17,10 +17,8 @@ class In extends Test
 		return "in";
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ is incorrect"
-		);
+		return "$field->label is incorrect";
 	}
 }

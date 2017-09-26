@@ -5,73 +5,42 @@ use Validator\Test;
 
 class Translator
 {
-	public static $messages = array();
-	public static $locale = "en_GB";
-	public static $v;
+	protected static $instance;
 
-	public static function getError($error)
+	public $locale = "en_GB";
+	public $v;
+
+	public static function instance()
 	{
-		$formattedMessage = self::getFormattedMessage($error["field"], $error["test"]);
+		if (!self::$instance)
+			self::$instance = new self;
 
-		return $formattedMessage;
+		return self::$instance;
+	}
+
+	protected function __construct()
+	{
 	}
 
 	public static function getErrors(Validator $v)
 	{
-		self::$v = $v;
+		$instance = self::instance();
+		$errors = $v->getErrors();
+		$errorStrings = array();
 
-		$messages = array();
-
-		foreach ($v->getErrors() as $error)
+		foreach ($errors as $error)
 		{
-			$fieldName = $error["field"]->name;
-			$messages[$fieldName][] = self::getError($error);
+			$key = $error["field"]->name;
+			$errorStrings[$key] = $instance->getError($error);
 		}
 
-		return $messages;
+		return $errorStrings;
 	}
 
-	public static function getLabel(Field $field)
+	public function getError(array $error)
 	{
-		if (isset(self::$v->labels[$field->name]))
-			return self::$v->labels[$field->name];
-
-		return $field->name;
-	}
-
-	public static function getMessage(Test $test)
-	{
-		$testName = $test->getName();
-
-		if (isset(self::$messages[$testName]))
-			return self::$messages[$testName];
-
-		return "'__field__' failed test '". $test->getName() ."'";
-	}
-
-	public static function getFormattedMessage(Field $field, Test $test)
-	{
-		$message = self::getMessage($test);
-
-		$replacements = array(
-			"__field__" => self::getLabel($field)
-		);
-
-		foreach ($replacements as $pattern => $replacement)
-			$message = str_replace($pattern, $replacement, $message);
-
-		foreach ($test->params as $i => $param)
-			$message = str_replace("__". $i ."__", $param, $message);
+		$message = $error["test"]->translate($error["field"], $error["error"], $this->locale);
 
 		return $message;
-	}
-
-	public static function addTranslation(Test $test)
-	{
-		$trans = $test->getTranslation();
-		$name = $test->getName();
-
-		if (isset($trans[self::$locale]))
-			self::$messages[$name] = $trans[self::$locale];
 	}
 }

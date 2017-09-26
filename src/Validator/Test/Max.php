@@ -20,10 +20,8 @@ class Max extends Test
 		return "max";
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ must be lower than __0__"
-		);
+		return "$field->label must be lower than ". $this->params[0];
 	}
 }

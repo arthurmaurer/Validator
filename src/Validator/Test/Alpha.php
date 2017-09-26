@@ -19,10 +19,8 @@ class Alpha extends Test
 		return "alpha";
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array(
-			"en_GB" => "Field __field__ must contain only alphabetical characters"
-		);
+		return "$field->label must contain only alphabetical characters";
 	}
 }

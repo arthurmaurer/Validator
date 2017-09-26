@@ -36,9 +36,9 @@ abstract class Test
 		return false;
 	}
 
-	public function getTranslation()
+	public function translate(Field $field, $error, $locale)
 	{
-		return array();
+		return "";
 	}
 
 	public function sanitize($value)

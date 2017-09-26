@@ -12,7 +12,6 @@ class Validator
 
 	public $fields = array();
 	public $errorContainer;
-	public $labels = array();
 
 	public static function addTest($testClass)
 	{
@@ -23,8 +22,6 @@ class Validator
 		$name = $test->getName();
 
 		self::$testClasses[$name] = $testClass;
-
-		Translator::addTranslation($test);
 	}
 
 	public function __construct(array $fields = null)
@@ -37,7 +34,8 @@ class Validator
 
 	public function addLabels(array $labels)
 	{
-		$this->labels += $labels;
+		foreach ($labels as $fieldPath => $label)
+			$this->fields[$fieldPath]->label = $label;
 	}
 
 	public function addField($fieldName, array $tests)
@@ -80,7 +78,7 @@ class Validator
 
 			if ($result !== Test::RESULT_VALID)
 			{
-				$this->addError($field, $test);
+				$this->addError($field, $test, $result);
 				return false;
 			}
 		}
@@ -88,11 +86,12 @@ class Validator
 		return true;
 	}
 
-	public function addError(Field $field, Test $test)
+	public function addError(Field $field, Test $test, $error)
 	{
 		$this->errorContainer->add(array(
 			"field" => $field,
-			"test" => $test
+			"test" => $test,
+			"error" => $error
 		));
 	}
 
