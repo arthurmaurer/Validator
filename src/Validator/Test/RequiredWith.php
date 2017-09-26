@@ -7,14 +7,17 @@ use Validator\DataMapper\NoResult;
 
 class RequiredWith extends Test
 {
+	const PARAM_FIELD = 0;
+	const PARAM_FIELD_VALUE = 1;
+
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		$pair = $this->params[0];
+		$pair = $this->params[self::PARAM_FIELD];
 		$pairValue = $dataMapper->get($pair);
 
-		if (isset($this->params[1]))
+		if (isset($this->params[self::PARAM_FIELD_VALUE]))
 		{
-			$wantedValue = $this->params[1];
+			$wantedValue = $this->params[self::PARAM_FIELD_VALUE];
 
 			if ($wantedValue === $pairValue)
 				return (!$value instanceof NoResult);
