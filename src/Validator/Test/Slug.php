@@ -9,7 +9,7 @@ class Slug extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		return preg_match("#^[a-z0-9_-]+$#i", $value);
+		return (bool)preg_match("#^[a-z0-9_-]+$#i", $value);
 	}
 
 	public function getName()
