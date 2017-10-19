@@ -8,7 +8,7 @@ use Validator\DataMapper\NoResult;
 class Custom extends Test
 {
 	const PARAM_TEST = 0;
-	const PARAM_TRANS = 0;
+	const PARAM_TRANS = 1;
 
 	public function test($value, Field $field, DataMapper $mapper)
 	{
@@ -25,7 +25,14 @@ class Custom extends Test
 	public function translate(Field $field, $error, $locale)
 	{
 		if (isset($this->params[self::PARAM_TRANS]))
-			return $this->params[self::PARAM_TRANS]($field, $error, $locale);
+		{
+			$trans = $this->params[self::PARAM_TRANS];
+
+			if (is_callable($trans))
+				return $trans($field, $error, $locale);
+			else
+				return $trans;
+		}
 
 		return "$field->label is invalid";
 	}
