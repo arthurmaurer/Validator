@@ -72,3 +72,4 @@ Validator::addTest('Validator\\Test\\Required');
 Validator::addTest('Validator\\Test\\RequiredWith');
 Validator::addTest('Validator\\Test\\Email');
 Validator::addTest('Validator\\Test\\In');
+Validator::addTest('Validator\\Test\\Slug');
