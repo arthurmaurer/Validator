@@ -2,6 +2,7 @@
 use PHPUnit\Framework\TestCase;
 use Validator\DataMapper\NoResult;
 use Validator\DataMapper\DataMapper;
+use Validator\DataMapper\ResultCollection;
 
 class DataMapperTest extends TestCase
 {
@@ -24,13 +25,14 @@ class DataMapperTest extends TestCase
 						"ugly",
 						"ugly af",
 					),
+					"luckyNumbers" => array(4, 12, 37)
 				),
 				"friends" => array(
 					"noe" => array(
-						"name" => "Noe",
+						"age" => 26,
 					),
 					"flo" => array(
-						"name" => "Flo",
+						"age" => 31,
 					),
 				),
 			);
@@ -50,12 +52,15 @@ class DataMapperTest extends TestCase
 		$data = self::getMapperData();
 
 		return array(
-			array("unknown",			new NoResult()),
-			array("user.unknown",		new NoResult()),
-			array("unknown.name",		new NoResult()),
-			array("user.name",			$data["user"]["name"]),
-			array("user.adress.city",	$data["user"]["adress"]["city"]),
-			array("user.adress.street",	new NoResult()),
+			array("unknown",				new NoResult()),
+			array("user.unknown",			new NoResult()),
+			array("unknown.name",			new NoResult()),
+			array("user.name",				$data["user"]["name"]),
+			array("user.adress.city",		$data["user"]["adress"]["city"]),
+			array("user.adress.street",		new NoResult()),
+			array("user.luckyNumbers",		$data["user"]["luckyNumbers"]),
+			array("user.luckyNumbers.*",	new ResultCollection($data["user"]["luckyNumbers"])),
+			array("friends.*.age",			new ResultCollection(array("noe" => 26, "flo" => 31))),
 		);
 	}
 

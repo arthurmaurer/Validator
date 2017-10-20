@@ -28,14 +28,16 @@ class Validator
 		$this->errors = array();
 
 		foreach ($this->fields as $field)
-			$this->validateField($field, $mapper);
+		{
+			$value = $mapper->get($field->name);
+			$this->validateField($value, $field, $mapper);
+		}
 
 		return (count($this->errors) === 0);
 	}
 
-	public function validateField(Field $field, DataMapper $mapper)
+	public function validateField($value, Field $field, DataMapper $mapper)
 	{
-		$value = $mapper->get($field->name);
 
 		foreach ($field->tests as $testName => $test)
 		{

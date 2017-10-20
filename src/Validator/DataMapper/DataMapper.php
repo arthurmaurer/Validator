@@ -23,12 +23,16 @@ class DataMapper
 
 		if ($root === "*")
 		{
-			$result = array();
+			$results = array();
 
 			foreach ($object as $i => $child)
-				$result[$i] = $this->realGet($rest, $child);
+			{
+				$results[$i] = ($rest)
+					? $this->realGet($rest, $child)
+					: $child;
+			}
 
-			return $result;
+			return new ResultCollection($results);
 		}
 
 		if (array_key_exists($root, $object))
