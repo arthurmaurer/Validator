@@ -109,4 +109,39 @@ class ValidatorTest extends TestCase
 
 		$this->assertFalse($result);
 	}
+
+	public function testWildcardValidation()
+	{
+		$data = array(
+			"user" => array(
+				"luckyNumbers" => array(4, 12, 37),
+				"friends" => array(
+					"noe" => array(
+						"age" => 26,
+					),
+					"flo" => array(
+						"age" => 31,
+					),
+				),
+			),
+		);
+
+		$v = new ValidatorWrapper(array(
+			"user.luckyNumbers.*" => array(
+				array("number")
+			)
+		));
+
+		$result = $v->validate($data);
+		$this->assertTrue($result);
+
+		$v = new ValidatorWrapper(array(
+			"user.friends.*.age" => array(
+				array("number")
+			)
+		));
+
+		$result = $v->validate($data);
+		$this->assertTrue($result);
+	}
 }

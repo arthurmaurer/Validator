@@ -2,6 +2,7 @@
 namespace Validator;
 use Validator\DataMapper\DataMapper;
 use Validator\DataMapper\NoResult;
+use Validator\DataMapper\ResultCollection;
 
 class Validator
 {
@@ -30,7 +31,15 @@ class Validator
 		foreach ($this->fields as $field)
 		{
 			$value = $mapper->get($field->name);
-			$this->validateField($value, $field, $mapper);
+
+			// If a wildcard has been used
+			if ($value instanceof ResultCollection)
+			{
+				foreach ($value->results as $k => $v)
+					$this->validateField($v, $field, $mapper);
+			}
+			else
+				$this->validateField($value, $field, $mapper);
 		}
 
 		return (count($this->errors) === 0);
