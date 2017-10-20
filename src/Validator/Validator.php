@@ -74,3 +74,5 @@ Validator::addTest('Validator\\Test\\Email');
 Validator::addTest('Validator\\Test\\In');
 Validator::addTest('Validator\\Test\\Slug');
 Validator::addTest('Validator\\Test\\Custom');
+Validator::addTest('Validator\\Test\\IsArray');
+Validator::addTest('Validator\\Test\\Length');
