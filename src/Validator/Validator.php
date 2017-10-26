@@ -48,7 +48,7 @@ class Validator
 	public function validateField($value, Field $field, DataMapper $mapper)
 	{
 
-		foreach ($field->tests as $testName => $test)
+		foreach ($field->tests as $test)
 		{
 			if ($value instanceof NoResult && !$test->shouldTestMissingFields())
 				continue ;

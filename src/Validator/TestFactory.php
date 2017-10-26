@@ -25,10 +25,7 @@ class TestFactory
 		$tests = array();
 
 		foreach ($params as $row)
-		{
-			$testName = $row[0];
-			$tests[$testName] = $this->create($row);
-		}
+			$tests[] = $this->create($row);
 
 		return $tests;
 	}

@@ -144,4 +144,26 @@ class ValidatorTest extends TestCase
 		$result = $v->validate($data);
 		$this->assertTrue($result);
 	}
+
+	public function testMultipleCustomTests()
+	{
+		// We test wether the second custom tests overrides the first one or not.
+		// As we want to be able to have multiple custom tests, the first one must be
+		// executed and therefore, the validation must fail.
+		$data = array("value" => "abc");
+
+		$v = new ValidatorWrapper(array(
+			"value" => array(
+				array("custom", function ($value) {
+					return false;
+				}),
+				array("custom", function ($value) {
+					return true;
+				}),
+			),
+		));
+
+		$result = $v->validate($data);
+		$this->assertFalse($result);
+	}
 }
