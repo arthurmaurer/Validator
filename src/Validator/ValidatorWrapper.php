@@ -1,13 +1,19 @@
 <?php
 namespace Validator;
+use Validator\Parser\ArrayShorthand;
 
 class ValidatorWrapper
 {
 	public $v;
 
-	public function __construct(array $fields = null)
+	public function __construct(array $fields = null, $parser = null)
 	{
+		if (!$parser)
+			$parser = new ArrayShorthand;
+
 		$this->v = new Validator;
+
+		$fields = $parser->parseFields($fields);
 
 		if ($fields)
 			$this->addFields($fields);
