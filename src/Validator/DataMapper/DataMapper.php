@@ -14,10 +14,10 @@ class DataMapper
 
 	public function get($path)
 	{
-		return $this->realGet($path, $this->data);
+		return $this->internalGet($path, $this->data);
 	}
 
-	protected function realGet($path, $object)
+	protected function internalGet($path, $object)
 	{
 		list($root, $rest) = $this->getPathRoot($path);
 
@@ -28,7 +28,7 @@ class DataMapper
 			foreach ($object as $i => $child)
 			{
 				$results[$i] = ($rest)
-					? $this->realGet($rest, $child)
+					? $this->internalGet($rest, $child)
 					: $child;
 			}
 
@@ -42,10 +42,31 @@ class DataMapper
 			if ($rest === "" || !is_array($target))
 				return $target;
 
-			return $this->realGet($rest, $target);
+			return $this->internalGet($rest, $target);
 		}
 
 		return new NoResult;
+	}
+
+	public function set($path, $value)
+	{
+		return $this->internalSet($path, $value, $this->data);
+	}
+
+	protected function internalSet($path, $value, &$object)
+	{
+		list($root, $rest) = $this->getPathRoot($path);
+
+		if ($rest === "")
+		{
+			$object[$root] = $value;
+
+			return true;
+		}
+		else if (array_key_exists($root, $object))
+			return $this->internalSet($rest, $value, $object[$root]);
+
+		return false;
 	}
 
 	protected function getPathRoot($path)

@@ -47,7 +47,7 @@ class DataMapperTest extends TestCase
 		$this->mapper = new DataMapper($data);
 	}
 
-	public function getData()
+	public function getReadData()
 	{
 		$data = self::getMapperData();
 
@@ -65,11 +65,41 @@ class DataMapperTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getReadData
 	 */
-	public function testMapper($path, $expected)
+	public function testRead($path, $expected)
 	{
 		$result = $this->mapper->get($path);
 		$this->assertEquals($expected, $result);
+	}
+
+	public function getWriteData()
+	{
+		$data = self::getMapperData();
+
+		return array(
+			array("species",				"Human",		true),
+			array("user.name",				"John",			true),
+			array("user.middleName",		"Jake",			true),
+			array("user.adress.city",		"London",		true),
+			array("user.home.city",			"London",		false),
+			array("user.friends",			array(),		true),
+			array("user.luckyNumbers.1",	24,				true),
+			array("user.luckyNumbers.5",	48,				true),
+		);
+	}
+
+	/**
+	 * @dataProvider getWriteData
+	 */
+	public function testWrite($path, $value, $expected)
+	{
+		$result = $this->mapper->set($path, $value);
+
+		$this->assertEquals($expected, $result);
+
+		// If we meant to have a successful write, we check it
+		if ($expected)
+			$this->assertEquals($this->mapper->get($path), $value);
 	}
 }
