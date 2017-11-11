@@ -60,7 +60,7 @@ class Validator
 				return false;
 			}
 
-			$this->sanitizeFieldOutput($value, $test, $field, $mapper);
+			$value = $this->sanitizeFieldOutput($value, $test, $field, $mapper);
 		}
 
 		return true;
@@ -70,6 +70,8 @@ class Validator
 	{
 		$sanitizedValue = $test->sanitizeOutput($value);
 		$mapper->set($field->name, $sanitizedValue);
+
+		return $sanitizedValue;
 	}
 
 	public function addError(Field $field, Test $test, $error)
