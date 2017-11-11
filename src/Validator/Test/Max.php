@@ -39,7 +39,11 @@ class Max extends Test
 		$orEqual = (isset($this->params[self::PARAM_EXCLUSIVE]) && $this->params[self::PARAM_EXCLUSIVE])
 			? ""
 			: " or equal";
+		$limit = $this->params[self::PARAM_LIMIT];
 
-		return "$field->label must be lower$orEqual than ". $this->params[self::PARAM_LIMIT];
+		if ($limit instanceof \DateTime)
+			$limit = $limit->format("d-m-Y H:i");
+
+		return "$field->label must be lower$orEqual than $limit";
 	}
 }
