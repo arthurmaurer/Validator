@@ -4,7 +4,7 @@ use Validator\DataMapper\NoResult;
 
 class DataMapper
 {
-	protected $data = array();
+	public $data = array();
 
 
 	public function __construct(array $data)
