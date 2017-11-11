@@ -39,7 +39,7 @@ class Validator
 					$this->validateField($v, $field, $mapper);
 			}
 			else
-				$this->validateField($value, $field, $mapper);
+				$result = $this->validateField($value, $field, $mapper);
 		}
 
 		return (count($this->errors) === 0);
@@ -59,9 +59,17 @@ class Validator
 				$this->addError($field, $test, $result);
 				return false;
 			}
+
+			$this->sanitizeFieldOutput($value, $test, $field, $mapper);
 		}
 
 		return true;
+	}
+
+	public function sanitizeFieldOutput($value, Test $test, Field $field, DataMapper $mapper)
+	{
+		$sanitizedValue = $test->sanitizeOutput($value);
+		$mapper->set($field->name, $sanitizedValue);
 	}
 
 	public function addError(Field $field, Test $test, $error)

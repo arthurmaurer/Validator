@@ -45,4 +45,9 @@ abstract class Test
 	{
 		return $value;
 	}
+
+	public function sanitizeOutput($value)
+	{
+		return $value;
+	}
 }

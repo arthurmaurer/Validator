@@ -22,6 +22,14 @@ class Date extends Test
 		return ($dateString && $dateString === $value);
 	}
 
+	public function sanitizeOutput($value)
+	{
+		$format = $this->params[self::PARAM_FORMAT];
+		$date = \DateTime::createFromFormat($format, $value);
+
+		return $date;
+	}
+
 	public function getName()
 	{
 		return "date";
