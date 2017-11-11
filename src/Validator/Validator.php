@@ -10,6 +10,7 @@ class Validator
 
 	public $fields = array();
 	public $errors;
+	public $sanitizedData;
 
 	public static function addTest($testClass)
 	{
@@ -41,6 +42,8 @@ class Validator
 			else
 				$result = $this->validateField($value, $field, $mapper);
 		}
+
+		$this->sanitizedData = $mapper->data;
 
 		return (count($this->errors) === 0);
 	}

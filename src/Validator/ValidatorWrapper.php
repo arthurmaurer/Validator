@@ -51,4 +51,9 @@ class ValidatorWrapper
 
 		return $errors;
 	}
+
+	public function getSanitizedData()
+	{
+		return $this->v->sanitizedData;
+	}
 }
