@@ -4,23 +4,29 @@ use Validator\Test;
 use Validator\Field;
 use Validator\DataMapper\DataMapper;
 use Validator\DataMapper\NoResult;
+use Validator\Utility\Compare;
 
 class Min extends Test
 {
 	const PARAM_LIMIT = 0;
-	const PARAM_STRICT = 1;
+	const PARAM_EXCLUSIVE = 1;
 
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		if (!is_numeric($value))
+		$limit = $this->params[self::PARAM_LIMIT];
+		$exclusive = (isset($this->params[self::PARAM_EXCLUSIVE]))
+			? (bool) $this->params[self::PARAM_EXCLUSIVE]
+			: false;
+
+		$cmp = Compare::compare($value, $limit, $limit);
+
+		if ($cmp === false)
 			return false;
 
-		$limit = $this->params[self::PARAM_LIMIT];
+		if ($exclusive)
+			return ($cmp > 0);
 
-		if (isset($this->params[self::PARAM_STRICT]) && $this->params[self::PARAM_STRICT])
-			return ($value > $limit);
-
-		return ($value >= $limit);
+		return ($cmp >= 0);
 	}
 
 	public function getName()
@@ -30,7 +36,7 @@ class Min extends Test
 
 	public function translate(Field $field, $error, $locale)
 	{
-		$orEqual = (isset($this->params[self::PARAM_STRICT]) && $this->params[self::PARAM_STRICT])
+		$orEqual = (isset($this->params[self::PARAM_EXCLUSIVE]) && $this->params[self::PARAM_EXCLUSIVE])
 			? ""
 			: " or equal";
 

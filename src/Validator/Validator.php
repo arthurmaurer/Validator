@@ -88,3 +88,4 @@ Validator::addTest('Validator\\Test\\IsArray');
 Validator::addTest('Validator\\Test\\Length');
 Validator::addTest('Validator\\Test\\Equals');
 Validator::addTest('Validator\\Test\\Url');
+Validator::addTest('Validator\\Test\\Date');

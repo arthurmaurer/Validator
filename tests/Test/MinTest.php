@@ -20,13 +20,17 @@ class MinTest extends TestCase
 	public function getData()
 	{
 		return array(
-			//	  value	limit	strict	expected
-			array(8,	5,		false,	true),
-			array(5,	5,		false,	true),
-			array(5,	5,		true,	false),
-			array(4,	5,		false,	false),
-			array("",	5,		false,	false),
-			array("ab",	5,		false,	false),
+			//	  value				limit						strict		expected
+			array(8,				5,							false,		true),
+			array(5,				5,							false,		true),
+			array(5,				5,							true,		false),
+			array(4,				5,							false,		false),
+			array("",				5,							false,		false),
+			array("ab",				5,							false,		false),
+			array(new \DateTime,	new \DateTime,				false,		true),
+			array(new \DateTime,	new \DateTime,				true,		false),
+			array(new \DateTime,	new \DateTime("-1 day"),	false,		true),
+			array(new \DateTime,	new \DateTime("+1 day"),	false,		false),
 		);
 	}
 
