@@ -18,9 +18,15 @@ class Validator
 			throw new \Exception("Test $testClass does not exist.");
 
 		$test = new $testClass;
-		$name = $test->getName();
+		$names = $test->getName();
 
-		self::$testClasses[$name] = $testClass;
+		if (!is_array($names)) {
+		    $names = [$names];
+        }
+
+		foreach ($names as $name) {
+		    self::$testClasses[$name] = $testClass;
+        }
 	}
 
 	public function validate(array $data)
@@ -102,3 +108,6 @@ Validator::addTest('Validator\\Test\\Length');
 Validator::addTest('Validator\\Test\\Equals');
 Validator::addTest('Validator\\Test\\Url');
 Validator::addTest('Validator\\Test\\Date');
+Validator::addTest('Validator\\Test\\IsCallable');
+Validator::addTest('Validator\\Test\\DefaultValue');
+Validator::addTest('Validator\\Test\\Integer');

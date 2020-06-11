@@ -5,25 +5,20 @@ use Validator\Field;
 use Validator\DataMapper\DataMapper;
 use Validator\DataMapper\NoResult;
 
-class Number extends Test
+class IsCallable extends Test
 {
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
-		return (is_numeric($value));
+	    return is_callable($value);
 	}
 
-    public function sanitizeOutput($value)
-    {
-        return (float)$value;
-    }
-
-    public function getName()
+	public function getName()
 	{
-		return ["number", "float", "decimal"];
+		return "callable";
 	}
 
 	public function translate(Field $field, $error, $locale)
 	{
-		return "$field->label must be a number";
+		return "$field->label should be a callable";
 	}
 }
