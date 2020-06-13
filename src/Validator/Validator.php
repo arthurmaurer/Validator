@@ -111,3 +111,4 @@ Validator::addTest('Validator\\Test\\Date');
 Validator::addTest('Validator\\Test\\IsCallable');
 Validator::addTest('Validator\\Test\\DefaultValue');
 Validator::addTest('Validator\\Test\\Integer');
+Validator::addTest('Validator\\Test\\Boolean');

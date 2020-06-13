@@ -16,7 +16,7 @@ class In extends Test
 
 	public function getName()
 	{
-		return "in";
+		return ["in", "enum"];
 	}
 
 	public function translate(Field $field, $error, $locale)
