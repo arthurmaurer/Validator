@@ -7,8 +7,8 @@ use Validator\DataMapper\NoResult;
 
 class Boolean extends Test
 {
-    const TRUE_VALUES = ['true', '1', 'yes'];
-    const FALSE_VALUES = ['false', '0', 'no', 'null', ''];
+    const TRUE_VALUES = ['true', true, '1', 1, 'yes'];
+    const FALSE_VALUES = ['false', false, '0', 0, 'no', 'null', ''];
 
 	public function test($value, Field $field, DataMapper $dataMapper)
 	{
@@ -16,7 +16,7 @@ class Boolean extends Test
 	        return true;
         }
 
-	    return (self::isTrue($value) || self::isFalse($value));
+	    return ($this->isTrue($value) || $this->isFalse($value));
 	}
 
 	public function sanitizeOutput($value)

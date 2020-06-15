@@ -16,9 +16,9 @@ class DefaultValue extends Test
 
 	public function sanitizeOutput($value)
 	{
-	    return ($value && !($value instanceof NoResult))
-            ? $value
-            : $this->params[self::PARAM_DEFAULT_VALUE] ?? null;
+	    return ($value instanceof NoResult)
+            ? $this->params[self::PARAM_DEFAULT_VALUE] ?? null
+            : $value;
 	}
 
     public function shouldTestMissingFields()
